@@ -1,15 +1,21 @@
-import emitirTextoEditor from "./socket-documento.js";
+import {emitirTextoEditor,  selecionarDocumento } from "./socket-documento.js";
 
 const parametros = new URLSearchParams(window.location.search);
-const nomeDocumento = parametros.get("nome");
+const nome = parametros.get("nome");
 const tituloDocumento = document.getElementById("titulo-documento");
 const textoEditor = document.getElementById("editor-texto");
 
-tituloDocumento.textContent = nomeDocumento || "Documento sem título";
+tituloDocumento.textContent = nome || "Documento sem título";
 
+selecionarDocumento(nome);
 
 textoEditor.addEventListener("keyup",()=>{
-    emitirTextoEditor(textoEditor.value);
+    emitirTextoEditor({
+        texto: textoEditor.value,
+        nome: nome
+    }
+
+    );
 })
 
 function atualizatextoEditor(texto){
@@ -19,4 +25,4 @@ function atualizatextoEditor(texto){
     textoEditor.value = texto;
 };
 
-export default atualizatextoEditor;
+export {atualizatextoEditor};
