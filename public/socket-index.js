@@ -1,4 +1,4 @@
-import { inserirLinkDocumento } from "./index.js";
+import { inserirLinkDocumento, removerLinkDocumento } from "./index.js";
 
 const socket = io();
 socket.emit("obter_documentos",(documentos)=>{
@@ -22,4 +22,8 @@ socket.on("apagar_input",()=>{
     document.getElementById("input-documento").value="";
 });
 
+socket.on("excluir_documento_sucesso",(nome)=>{
+    removerLinkDocumento(nome);
+
+});
 export {emitirAdicionarDocumento};

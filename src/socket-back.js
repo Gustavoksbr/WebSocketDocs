@@ -71,7 +71,7 @@ io.on("connection",(soc)=>{
         // if (documento){
         //     console.log("dados: "+dados.texto);
         //     documento.texto = dados.texto;
-        //     soc.to(dados.nomeDocumento).emit("texto_editor_clientes",dados.texto);
+        //     soc.to(dados.nome).emit("texto_editor_clientes",dados.texto);
         // }
 
 
@@ -80,7 +80,9 @@ io.on("connection",(soc)=>{
     soc.on("excluir_documento", async(nome)=>{
         console.log("excluindo");
         const resultado = await excluirDocumento(nome);
-        
+        if (resultado.deletedCount){
+            io.emit("excluir_documento_sucesso",nome);
+        }
     })
 });
 

@@ -5,18 +5,28 @@ const listaDocumentos = document.getElementById("lista-documentos");
 const form = document.getElementById("form-adiciona-documento");
 const input = document.getElementById("input-documento");
 
-form.addEventListener("submit",(evento)=>{
-    evento.preventDefault();
-    emitirAdicionarDocumento(input.value);
-    console.log(input.value);
-});
+if(form){
+    form.addEventListener("submit",(evento)=>{
+        evento.preventDefault();
+        emitirAdicionarDocumento(input.value);
+        console.log(input.value);
+    });
+    
+}
 
 function inserirLinkDocumento(nome){
     listaDocumentos.innerHTML += `
-    <a href="documento.html?nome=${nome}" class="list-group-item list-group-item-action">
+    <a href="documento.html?nome=${nome}" 
+    class="list-group-item list-group-item-action"
+    id ="documento-${nome}"
+    >
         ${nome}
     </a>
     `
 };
-
-export {inserirLinkDocumento};
+function removerLinkDocumento(nome)
+{
+    const documento = document.getElementById(`documento-${nome}`);
+    listaDocumentos.removeChild(documento);
+}
+export {inserirLinkDocumento, removerLinkDocumento};

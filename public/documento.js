@@ -6,6 +6,10 @@ const tituloDocumento = document.getElementById("titulo-documento");
 const textoEditor = document.getElementById("editor-texto");
 const botaoExcluir = document.getElementById("excluir-documento");
 
+if(nome){
+    console.log(`nome aparece:${nome}`);
+}
+
 tituloDocumento.textContent = nome || "Documento sem título";
 
 selecionarDocumento(nome);
@@ -30,4 +34,14 @@ botaoExcluir.addEventListener("click",()=>{
     emitirExcluirDocumento(nome);
 })
 
-export {atualizatextoEditor};
+
+function alertarERedirecionar(n){
+    if(nome === n)
+    {
+        alert(`Documento ${n} excluído!`);
+        window.location.href = "/";
+    }
+
+}
+
+export {atualizatextoEditor,alertarERedirecionar};
