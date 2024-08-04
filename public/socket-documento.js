@@ -22,5 +22,10 @@ socket.on("texto_editor_clientes",(texto)=>{
 //     atualizatextoEditor(texto);
 // })
 
+function emitirExcluirDocumento(nome){
+    socket.emit("excluir_documento",nome);
 
-export {emitirTextoEditor, selecionarDocumento};
+}
+
+
+export {emitirTextoEditor, selecionarDocumento, emitirExcluirDocumento};

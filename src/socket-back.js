@@ -1,5 +1,5 @@
 import io from "./servidor.js";
-import { encontrarDocumento, atualizaDocumento } from "./documentoDb.js";
+import { encontrarDocumento, atualizaDocumento,obterDocumentos,adicionarDocumento, excluirDocumento } from "./documentoDb.js";
 
 // const documentos =[
 //     {
@@ -19,11 +19,34 @@ import { encontrarDocumento, atualizaDocumento } from "./documentoDb.js";
 io.on("connection",(soc)=>{
     console.log("Um cliente se conectou! ID:", soc.id);
 
+    soc.on("obter_documentos", async (devolverDocumentos)=>{
+        const documentos = await obterDocumentos();
+        console.log(documentos);
+        devolverDocumentos(documentos);
+    })
+
+    soc.on("adicionar_documento", async (nome)=>
+    {
+
+        const documentoExiste = await encontrarDocumento(nome);
+        if (documentoExiste){
+            soc.emit("documento_existente",nome);
+        }
+        else
+        {
+            const resultado = await adicionarDocumento(nome);
+            if (resultado.acknowledged) //se o resultado foi reconhecido
+        {
+            io.emit("adicionar_documento_interface",nome);
+        }
+        soc.emit("apagar_input");
+        }
+        
+    });
 
     soc.on("selecionar_documento", async(nome,devolvertexto)=>{
+
         const documento = await encontrarDocumento(nome);
-
-
         soc.join(nome);
         console.log(nome);
         console.log(documento);
@@ -53,6 +76,12 @@ io.on("connection",(soc)=>{
 
 
     });
+
+    soc.on("excluir_documento", async(nome)=>{
+        console.log("excluindo");
+        const resultado = await excluirDocumento(nome);
+        
+    })
 });
 
 // sem bd:

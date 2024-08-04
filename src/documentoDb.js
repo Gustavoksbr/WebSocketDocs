@@ -1,5 +1,21 @@
 import { documentos } from "./dbConnect.js";
 
+
+function obterDocumentos(){
+ const doc = documentos.find().toArray();
+
+ return doc;
+};
+
+function adicionarDocumento(nome)
+{
+ const resultado = documentos.insertOne({
+  nome,
+  texto:''
+ })
+ return resultado;
+}
+
 function encontrarDocumento(nome) {
     const documento = documentos.findOne({
           nome: nome
@@ -18,6 +34,11 @@ function encontrarDocumento(nome) {
   })
   
   return atualizacao;
+  };
+
+  function excluirDocumento(nome){
+ const resultado = documentos.deleteOne({nome});
+ return resultado;
   }
 
-  export {encontrarDocumento,atualizaDocumento};
+  export {encontrarDocumento,atualizaDocumento,obterDocumentos,adicionarDocumento, excluirDocumento};

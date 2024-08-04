@@ -1,4 +1,15 @@
+import {emitirAdicionarDocumento} from './socket-index.js';
+
 const listaDocumentos = document.getElementById("lista-documentos");
+
+const form = document.getElementById("form-adiciona-documento");
+const input = document.getElementById("input-documento");
+
+form.addEventListener("submit",(evento)=>{
+    evento.preventDefault();
+    emitirAdicionarDocumento(input.value);
+    console.log(input.value);
+});
 
 function inserirLinkDocumento(nome){
     listaDocumentos.innerHTML += `
@@ -8,4 +19,4 @@ function inserirLinkDocumento(nome){
     `
 };
 
-inserirLinkDocumento("javascript");
+export {inserirLinkDocumento};

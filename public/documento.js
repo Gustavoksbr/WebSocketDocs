@@ -1,9 +1,10 @@
-import {emitirTextoEditor,  selecionarDocumento } from "./socket-documento.js";
+import {emitirTextoEditor,  selecionarDocumento, emitirExcluirDocumento } from "./socket-documento.js";
 
 const parametros = new URLSearchParams(window.location.search);
 const nome = parametros.get("nome");
 const tituloDocumento = document.getElementById("titulo-documento");
 const textoEditor = document.getElementById("editor-texto");
+const botaoExcluir = document.getElementById("excluir-documento");
 
 tituloDocumento.textContent = nome || "Documento sem título";
 
@@ -24,5 +25,9 @@ function atualizatextoEditor(texto){
     // o  valor do texto fica pra todo mundo:
     textoEditor.value = texto;
 };
+
+botaoExcluir.addEventListener("click",()=>{
+    emitirExcluirDocumento(nome);
+})
 
 export {atualizatextoEditor};
